@@ -1,0 +1,77 @@
+create table cliente (
+id_cliente int not null auto_increment,
+nome varchar (30) not null,
+cpf varchar (11) not null,
+email varchar (30) not null,
+telefone varchar (15) not null,
+usuario varchar (20) not null,
+senha varchar (20) not null,
+plano enum('FINANCEIRO', 'BEMESTAR', 'MINDSET') not null,
+formpagamento enum('BANCARIA', 'URPAY') not null,
+endereco varchar (60) not null,
+bairro varchar (30) not null,
+cidade varchar (30) not null,
+estado varchar (20) not null,
+cep varchar (10) not null,
+primary key (id_cliente)
+);
+
+create table diretos_ativos (
+id_diretos_ativos int not null auto_increment,
+nome varchar (40) not null,
+usuario varchar (25) not null,
+telefone varchar (30) not null,
+email varchar (30) not null,
+cod_cliente int not null,
+primary key(id_diretos_ativos),
+foreign key (cod_cliente) references cliente (id_cliente)
+);
+
+create table diretos_pendentes (
+id_diretos_pendentes int not null auto_increment,
+nome varchar (40) not null,
+usuario varchar (25) not null,
+telefone varchar (30) not null,
+email varchar (30) not null,
+cod_cliente int not null,
+primary key(id_diretos_pendentes),
+foreign key (cod_cliente) references cliente (id_cliente)
+);
+
+create table fatura (
+id_fatura int not null auto_increment,
+descricao1 varchar(30),
+descricao2 varchar(30),
+descricao3 varchar(30),
+descricao4 varchar(30),
+valor varchar (15) not null,
+registro date not null,
+status_fatura tinyint not null,
+cod_cliente int not null,
+primary key (id_fatura),
+foreign key (cod_cliente) references cliente (id_cliente)
+);
+
+create table financas (
+id_financas int not null auto_increment,
+usuario varchar (40) not null,
+entrada varchar (15) not null,
+saida varchar (15) not null,
+registro date not null,
+cod_cliente int not null,
+cod_fatura int not null,
+primary key (id_financas),
+foreign key (cod_cliente) references cliente (id_cliente),
+foreign key (cod_fatura) references fatura (id_fatura)
+);
+
+create table tickets (
+id_ticket int not null auto_increment,
+assunto varchar (30) not null,
+mensagem varchar (800) not null,
+data_ticket date not null,
+status_ticket tinyint not null,
+cod_cliente int not null,
+primary key (id_ticket),
+foreign key (cod_cliente) references cliente (id_cliente)
+);
