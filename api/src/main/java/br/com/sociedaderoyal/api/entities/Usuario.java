@@ -37,6 +37,7 @@ public class Usuario implements Serializable {
     private Date dataCriacao;
     private Usuario pai;
     private List<Usuario> filhos;
+    private List<Fatura> faturas;
 
     public Usuario() {
 
@@ -133,6 +134,16 @@ public class Usuario implements Serializable {
 
     public void setFilhos(List<Usuario> filhos) {
         this.filhos = filhos;
+    }
+
+    @OneToMany(mappedBy="cliente")
+    @JsonIgnore
+    public List<Fatura> getFaturas() {
+        return faturas;
+    }
+
+    public void setFaturas(List<Fatura> faturas) {
+        this.faturas = faturas;
     }
 
     //Quando acontece um cadastro
